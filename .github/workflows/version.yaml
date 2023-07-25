@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: echo "COOK_VERSION=$(curl -s https://api.github.com/repos/cooklang/CookCLI/releases | jq -r '[.[] | select(.prerelease == false)][0] | .tag_name[1:]')" >> $GITHUB_ENV
-      - run: echo "COOK_VERSION=${{ env.COOK_VERSION }}" | tee -a .env
+      - run: echo "COOK_VERSION=${{ env.COOK_VERSION }}" | tee .env
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: "chore: update CookCLI to ${{ env.COOK_VERSION }}"
