@@ -1,0 +1,15 @@
+name: Get latest CookCLI version
+
+on:
+  schedule:
+    - cron: "0 12 * * *"
+  workflow_dispatch:
+
+jobs:
+  version_check:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+          curl -s https://api.github.com/repos/cooklang/CookCLI/releases | jq -r '[.[] | select(.prerelease == false)][0] | .tag_name[1:]' > .version
+          echo "COOK_VERSION=$(cat .version)" >> $GITHUB_ENV
