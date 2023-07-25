@@ -1,4 +1,4 @@
-name: Get latest CookCLI version
+name: Update CookCLI
 
 on:
   schedule:
@@ -8,8 +8,16 @@ on:
 jobs:
   version_check:
     runs-on: ubuntu-20.04
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v3
       - run: |
-          echo "COOK_VERSION=$(curl -s https://api.github.com/repos/cooklang/CookCLI/releases | jq -r '[.[] | select(.prerelease == false)][0] | .tag_name[1:]')" > .env
-          cat .env
+          echo "COOK_VERSION=$(curl -s https://api.github.com/repos/cooklang/CookCLI/releases | jq -r '[.[] | select(.prerelease == false)][0] | .tag_name[1:]')" >> $GITHUB_ENV
+          echo "COOK_VERSION=${{ env.COOK_VERSION }}"
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "chore: update CookCLI to ${{ env.COOK_VERSION }}"
+          commit_user_name: "github-actions[bot]"
+          commit_user_email: "41898282+github-actions[bot]@users.noreply.github.com"
+          commit_author: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
