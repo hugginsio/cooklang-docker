@@ -1,0 +1,14 @@
+version: "3"
+
+tasks:
+  clean:
+    summary: Stop and prune the cook container and image
+    cmds:
+      - "docker stop cook"
+      - "docker container rm cook"
+      - "docker image rm cooklang-docker-cook -f"
+
+  compose:
+    summary: Build and launch CookCLI via Docker Compose
+    cmds:
+      - "docker-compose up -d"

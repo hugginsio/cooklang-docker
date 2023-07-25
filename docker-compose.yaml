@@ -1,0 +1,17 @@
+# Compose file for CookCLI Server
+
+version: "3.9"
+services:
+  cook:
+    container_name: "cook"
+    build: .
+    restart: unless-stopped
+    logging:
+      driver: "local"
+      options:
+        max-file: "3"
+        max-size: "5m"
+    volumes:
+      - "./seed/:/cookbook:ro"
+    ports:
+      - "9080:9080"
