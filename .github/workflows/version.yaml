@@ -2,7 +2,7 @@ name: Update CookCLI
 
 on:
   schedule:
-    - cron: "0 12 * * *"
+    - cron: "0 17 * * 5"
   workflow_dispatch:
 
 jobs:
